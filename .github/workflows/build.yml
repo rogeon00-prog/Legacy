@@ -1,80 +1,12 @@
-name: Build NOVERA Client (Lost Saga)
-on:
-  workflow_dispatch:
+name: Build NOVERA Client
+on: workflow_dispatch
 jobs:
-  build-client:
+  build:
     runs-on: windows-2022
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Patch source (auto)
+      - uses: actions/checkout@v4
+      - name: Build
         shell: pwsh
         run: |
-          curl.exe -sSL -o patch.ps1 "https://dl.kanna.web.id/gh/patch.ps1"
-          .\patch.ps1
-
-      - name: Build io3DEngine
-        shell: cmd
-        run: |
-          msbuild "win\io3DEngine.sln" /t:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0 /m /v:m
-
-      - name: Build LSLog
-        shell: cmd
-        run: |
-          msbuild "src\LSLog\LSLog.vcxproj" /t:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0 /m /v:m
-
-      - name: Build ioPac
-        shell: cmd
-        run: |
-          msbuild "src\ioPac\ioPac.vcxproj" /t:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0 /m /v:m
-
-      - name: Build LS_HTTP client lib
-        shell: cmd
-        run: |
-          msbuild "extra\LS_HTTP\LS_HTTP\LS_HTTP.vcxproj" /t:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0 /m /v:m
-
-      - name: Build NoveraClient
-        shell: cmd
-        run: |
-          msbuild "src\NoveraClient\NoveraClient.vcxproj" /t:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0 /m /v:m
-
-      - name: Cari hasil build
-        shell: pwsh
-        run: |
-          Write-Host "=== EXE ==="
-          Get-ChildItem -Recurse -Filter "NoveraClient.exe" -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_.FullName }
-          Write-Host "=== semua .dll baru ==="
-          Get-ChildItem -Recurse -Include "*.dll" -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt (Get-Date).AddMinutes(-40) -and $_.FullName -notmatch "\\obj\\" } | Select-Object -First 40 | ForEach-Object { Write-Host $_.FullName }
-
-      - name: Paketkan hasil
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path out | Out-Null
-          $exe = Get-ChildItem -Recurse -Filter "NoveraClient.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
-          if ($exe) {
-            Copy-Item $exe.FullName out\
-            Get-ChildItem $exe.DirectoryName -Include "*.dll" -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_.FullName out\ -ErrorAction SilentlyContinue }
-          }
-          Get-ChildItem -Recurse -Include "io3DEngine.dll","ioPac.dll","LSLog.dll","lslog.dll","ioPac.lib","io3DEngine.lib" -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "\\obj\\" } | ForEach-Object { Copy-Item $_.FullName out\ -ErrorAction SilentlyContinue }
-          Compress-Archive -Path out\* -DestinationPath NoveraClient-Build.zip -Force
-          Write-Host ("ZIP: " + [int]((Get-Item NoveraClient-Build.zip).Length/1KB) + " KB")
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NoveraClient-Build
-          path: NoveraClient-Build.zip
-          if-no-files-found: warn
-
-      - name: Upload ke VPS NOVERA
-        if: always()
-        shell: pwsh
-        run: |
-          if (Test-Path NoveraClient-Build.zip) {
-            curl.exe -sS -X POST --data-binary "@NoveraClient-Build.zip" "https://dl.kanna.web.id/gh/upload?key=537a789718306ca355bc4d7de855160a&name=NoveraClient-Build.zip"
-            Write-Host "upload selesai"
-          } else { Write-Host "ZIP tidak ada - skip" }
+          Invoke-WebRequest -UseBasicParsing -Uri "https://dl.kanna.web.id/gh/ghbuild.ps1" -OutFile ghbuild.ps1
+          powershell -ExecutionPolicy Bypass -File ghbuild.ps1
