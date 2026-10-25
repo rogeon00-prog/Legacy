@@ -16,12 +16,12 @@
 
 #ifdef SHIPPING
 	IDR_MAINFRAME    ICON       "res\\Shipping.ico"
-	#define DESCRIPTION         "Novera Client"
+	#define DESCRIPTION         "Kanna Client"
 #define PRODUCTVER           0,FILEVER,0,1
 #define STRPRODUCTVER        "0,FILEVER,0,1"
 #else
 	IDR_MAINFRAME    ICON       "res\\Admin.ico"
-	#define DESCRIPTION         "Novera Client Admin"
+	#define DESCRIPTION         "Kanna Client Admin"
 #define PRODUCTVER           0,FILEVER,0,1
 #define STRPRODUCTVER        "0,FILEVER,0,1"
 #endif
@@ -45,7 +45,7 @@ BEGIN
         BEGIN
 			VALUE "FileDescription", DESCRIPTION
      		VALUE "CompanyName", "NOVERA OSS"
-			VALUE "ProductName", "Novera Client"
+			VALUE "ProductName", "Kanna Client"
             VALUE "FileVersion", STRFILEVER
             VALUE "LegalCopyright", "NOVERA OSS"
             VALUE "ProductVersion", STRFILEVER

@@ -152,7 +152,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 
 	if( pLocal && !pLocal->IsRightLicense() )
 	{
-		MessageBox( NULL, "Your license has com up for renewal.", "Novera", MB_OK );
+		MessageBox( NULL, "Your license has com up for renewal.", "Kanna", MB_OK );
 		SAFEDELETE( pLocalMgr );
 		SAFEDELETE( pStringMgr );
 		SAFEDELETE( pStatics );
@@ -209,7 +209,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		ioNProtect::ReleaseInstance();
 #endif
 
-		MessageBox( NULL, "Get DX Info Error!", "Novera", MB_OK );
+		MessageBox( NULL, "Get DX Info Error!", "Kanna", MB_OK );
 		LOG( 0, "Get DX Info Error" );
 		return 0;
 	}
@@ -235,7 +235,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		ioNProtect::ReleaseInstance();
 #endif
 
-		MessageBox( NULL, "DX Version Error!", "Novera", MB_OK );
+		MessageBox( NULL, "DX Version Error!", "Kanna", MB_OK );
 		LOG( 0, "DX Version Error!" );
 
 		return 0;
@@ -259,7 +259,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		ioNProtect::ReleaseInstance();
 #endif
 		
-		MessageBox( NULL, "Create App Error!", "Novera", MB_OK );
+		MessageBox( NULL, "Create App Error!", "Kanna", MB_OK );
 		LOG( 0, "Create App Error!" );
 
 		return 0;
@@ -283,7 +283,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		ioNProtect::ReleaseInstance();
 #endif
 		
-		MessageBox( NULL, "App Cmd Error!", "Novera", MB_OK );
+		MessageBox( NULL, "App Cmd Error!", "Kanna", MB_OK );
 		LOG( 0, "App Cmd Error!" );
 
 		return 0;
@@ -311,7 +311,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		ioNProtect::ReleaseInstance();
 #endif
 
-		MessageBox( NULL, "App Option Error!", "Novera", MB_OK );
+		MessageBox( NULL, "App Option Error!", "Kanna", MB_OK );
 		LOG( 0, "Process Option Start Failed" );
 		return 0;
 	}
@@ -335,7 +335,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		if (!pApp->SetupNetwork(szIPOnCmd, iPortOncmd))
 		{
 			LOG(0, "Setup Network Failed");
-			MessageBox(NULL, "Failed to setup network", "Novera", MB_OK);
+			MessageBox(NULL, "Failed to setup network", "Kanna", MB_OK);
 			return 0;
 		}
 
@@ -362,19 +362,19 @@ int WINAPI WinMain( HINSTANCE hInstance,
 			else
 			{
 				LOG(0, "App LoginLoop Error" );
-				MessageBox( NULL, "App LoginLoop Error!", "Novera", MB_OK );
+				MessageBox( NULL, "App LoginLoop Error!", "Kanna", MB_OK );
 			}
 		}
 		else
 		{
 			LOG(0, "App SetupBeforeLogin Error" );
-			MessageBox( NULL, "App SetupBeforeLogin Error!", "Novera", MB_OK );
+			MessageBox( NULL, "App SetupBeforeLogin Error!", "Kanna", MB_OK );
 		}
 	}
 	else
 	{
 		LOG(0, "App InitWindow Error" );
-		MessageBox( NULL, "App InitWindow Error!", "Novera", MB_OK );
+		MessageBox( NULL, "App InitWindow Error!", "Kanna", MB_OK );
 	}
 	
 	// 정상종료 : DestroyWindow->ReleaseAll->PostQuitMessage
