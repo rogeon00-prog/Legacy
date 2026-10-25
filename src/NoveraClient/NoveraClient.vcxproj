@@ -331,7 +331,7 @@
       <AdditionalOptions>-Zm256 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <PreprocessorDefinitions>NEXON_IP;NPROTECT_CSAUTH3;NPROTECT;WIN32;NDEBUG;_WINDOWS;BALANCE_RENEWAL;SHIPPING;POPUPSTORE;ICEMAWANG_AI_MODE;USE_GA;DEVELOPER_MACRO_DISABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEXON_IP;WIN32;NDEBUG;_WINDOWS;BALANCE_RENEWAL;SHIPPING;POPUPSTORE;ICEMAWANG_AI_MODE;USE_GA;DEVELOPER_MACRO_DISABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -396,7 +396,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ShippingNProtect|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NPROTECT;BALANCE_RENEWAL;SHIPPING;POPUPSTORE;ICEMAWANG_AI_MODE;USE_GA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;BALANCE_RENEWAL;SHIPPING;POPUPSTORE;ICEMAWANG_AI_MODE;USE_GA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
