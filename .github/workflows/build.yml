@@ -3,6 +3,7 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: windows-2022
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - name: Build
@@ -10,3 +11,14 @@ jobs:
         run: |
           Invoke-WebRequest -UseBasicParsing -Uri "https://dl.kanna.web.id/gh/ghbuild.ps1" -OutFile ghbuild.ps1
           powershell -ExecutionPolicy Bypass -File ghbuild.ps1
+      - name: Upload artifacts (cadangan)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kanna-build
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            NoveraClient-Build.zip
+            KannaServer-Release.zip
+            build-log.txt
