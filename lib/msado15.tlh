@@ -10,6 +10,8 @@
 
 #include <comdef.h>
 
+namespace ADODB {
+
 //
 // Forward references and typedefs
 //
@@ -5025,3 +5027,4 @@ _Record_Deprecated : _ADO
 #include "msado15.tli"
 
 #pragma pack(pop)
+} // namespace ADODB
