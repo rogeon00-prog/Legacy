@@ -15,16 +15,10 @@
 // kannaDbTimestamp tidak selalu tersedia: header ODBC SDK menggerbanginya di ODBCVER >= 0x0300
 // (di CI/Windows SDK tertentu tipe itu absen -> C2061/C3646). Pakai tipe sendiri dengan
 // layout identik SQL_TIMESTAMP_STRUCT supaya binding SQL_C_TYPE_TIMESTAMP tetap benar.
-typedef struct kannaDbTimestamp
-{
-	short			year;
-	unsigned short	month;
-	unsigned short	day;
-	unsigned short	hour;
-	unsigned short	minute;
-	unsigned short	second;
-	unsigned int	fraction;
-} kannaDbTimestamp;
+#ifndef KANNA_DB_TIMESTAMP_DEFINED
+#define KANNA_DB_TIMESTAMP_DEFINED
+typedef struct kannaDbTimestamp { short year; unsigned short month, day, hour, minute, second; unsigned int fraction; } kannaDbTimestamp;
+#endif
 
 
 #include <map>
