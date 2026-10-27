@@ -1,4 +1,5 @@
 // cDatabaseODBC.cpp - akses DB via ODBC (unixODBC + FreeTDS) untuk Wine.
+#include "../stdafx.h"
 #include <windows.h>
 #include <sqltypes.h>
 #include <tchar.h>

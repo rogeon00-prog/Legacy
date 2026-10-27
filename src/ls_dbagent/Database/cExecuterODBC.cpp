@@ -1,6 +1,7 @@
 // cExecuterODBC.cpp - versi ODBC dari cExecuterADO (untuk Wine + unixODBC/FreeTDS).
 // Logika hasil (serialisasi) sengaja identik dengan cExecuterADO supaya protokol
 // balasan ke gamesvr/mainsvr tidak berubah.
+#include "../stdafx.h"
 #include <windows.h>
 
 #include "cExecuter.h"
