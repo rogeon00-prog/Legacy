@@ -81,10 +81,8 @@
 
 #ifdef _DEBUG
 	#pragma comment(lib, "../../lib/LSLogd.lib" )
-	#pragma comment(lib, "FreeType/Lib/freetype2312.lib")
 #else
 	#pragma comment(lib, "../../lib/LSLog.lib" )
-	#pragma comment(lib, "FreeType/Lib/freetype2312_D.lib")
 #endif
 
 #ifndef FREETYPE_API
