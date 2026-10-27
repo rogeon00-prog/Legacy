@@ -3,7 +3,24 @@ param(
 )
 
 $ErrorActionPreference = "Continue"
-$repoRoot = (Get-Location).Path
+
+# 1. Determine $repoRoot robustly
+$repoRoot = $null
+if ($PSScriptRoot) {
+  $candidate = Split-Path $PSScriptRoot -Parent
+  if (Test-Path (Join-Path $candidate "src")) { $repoRoot = $candidate }
+}
+if (-not $repoRoot) {
+  $curr = (Get-Location).Path
+  while ($curr) {
+    if (Test-Path (Join-Path $curr "src")) { $repoRoot = $curr; break }
+    $p = Split-Path $curr -Parent
+    if ($p -eq $curr) { break }
+    $curr = $p
+  }
+}
+if (-not $repoRoot) { $repoRoot = (Get-Location).Path }
+
 Write-Host "=== FreeType / ioFreeType Build Helper ==="
 Write-Host ("Repo root: " + $repoRoot)
 
@@ -15,32 +32,37 @@ $targetLib = Join-Path $ftLibDir "freetype2312.lib"
 if (Test-Path $targetLib) {
   Write-Host ("freetype2312.lib already exists: " + $targetLib)
   Copy-Item $targetLib (Join-Path $repoRoot "lib\freetype2312.lib") -Force -ErrorAction SilentlyContinue
+  Copy-Item $targetLib (Join-Path $ftLibDir "freetype2312_D.lib") -Force -ErrorAction SilentlyContinue
+  Copy-Item $targetLib (Join-Path $repoRoot "lib\freetype2312_D.lib") -Force -ErrorAction SilentlyContinue
   exit 0
 }
 
-# 1. Locate ft2312.zip
-$zipPath = Join-Path $repoRoot "src\ioFreeType\FreeType\ft2312.zip"
-if (-not (Test-Path $zipPath)) {
-  Write-Host "ft2312.zip not found locally, downloading..."
-  $curl = Join-Path $env:SystemRoot "System32\curl.exe"
-  if (Test-Path $curl) {
-    & $curl -sSL --retry 3 --retry-delay 2 -o $zipPath "https://downloads.sourceforge.net/project/freetype/freetype2/2.3.12/ft2312.zip"
-  } else {
-    Invoke-WebRequest -UseBasicParsing -Uri "https://downloads.sourceforge.net/project/freetype/freetype2/2.3.12/ft2312.zip" -OutFile $zipPath
-  }
+# 2. Download and extract FreeType 2.3.12 from GitHub
+$zipPath = Join-Path $repoRoot "freetype2312.zip"
+Write-Host "Downloading FreeType 2.3.12 from GitHub..."
+$zipUrl = "https://github.com/freetype/freetype/archive/refs/tags/VER-2-3-12.zip"
+$curl = Join-Path $env:SystemRoot "System32\curl.exe"
+if (Test-Path $curl) {
+  & $curl -sSL --retry 3 --retry-delay 2 -o $zipPath $zipUrl
+} else {
+  Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipPath
 }
 
-if (-not (Test-Path $zipPath)) {
-  Write-Host "ERROR: ft2312.zip could not be found or downloaded."
+if (-not (Test-Path $zipPath) -or (Get-Item $zipPath).Length -lt 100000) {
+  Write-Host "ERROR: freetype2312.zip download failed or file too small."
   exit 1
 }
 
-# 2. Extract ft2312.zip
 $ftExtract = Join-Path $repoRoot "_ft_build"
 Remove-Item $ftExtract -Recurse -Force -ErrorAction SilentlyContinue
 Expand-Archive -Path $zipPath -DestinationPath $ftExtract -Force
 
-$ftSrcDir = (Get-ChildItem $ftExtract -Recurse -Directory -Filter "freetype-2.3.12" | Select-Object -First 1).FullName
+$baseC = Get-ChildItem $ftExtract -Recurse -Filter "ftbase.c" | Select-Object -First 1
+if (-not $baseC) {
+  Write-Host "ERROR: ftbase.c not found in extracted archive."
+  exit 1
+}
+$ftSrcDir = Split-Path (Split-Path $baseC.DirectoryName -Parent) -Parent
 Write-Host ("FreeType source located at: " + $ftSrcDir)
 
 # 3. Locate MSVC x86 tools (cl.exe, lib.exe)
@@ -50,10 +72,13 @@ foreach ($b in @("C:\Program Files\Microsoft Visual Studio\2022\Enterprise","C:\
   if (Test-Path $c) {
     $ver = Get-ChildItem $c -Directory | Sort-Object Name -Descending | Select-Object -First 1
     if ($ver) {
-      $cl = Join-Path $ver.FullName "bin\HostX64\x86\cl.exe"
-      $libExe = Join-Path $ver.FullName "bin\HostX64\x86\lib.exe"
-      $chosenMsvc = $ver.FullName
-      if (Test-Path $cl) { break }
+      $c1 = Join-Path $ver.FullName "bin\HostX64\x86\cl.exe"
+      if (Test-Path $c1) {
+        $cl = $c1
+        $libExe = Join-Path $ver.FullName "bin\HostX64\x86\lib.exe"
+        $chosenMsvc = $ver.FullName
+        break
+      }
     }
   }
 }
@@ -122,3 +147,5 @@ if (Test-Path $targetLib) {
 
 # Clean temp objects
 Remove-Item $ftExtract -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item $zipPath -Force -ErrorAction SilentlyContinue
+exit 0
