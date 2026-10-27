@@ -70,9 +70,12 @@
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>Debug/ioFreeTypeD.pdb</ProgramDatabaseFile>
-      <ImportLibrary>../../lib/ioFreeTypeD.lib</ImportLibrary>
+      <ImportLibrary>../../lib/ioFreeTypeD_out.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y ..\..\lib\ioFreeTypeD_out.lib ..\..\lib\ioFreeTypeD.lib</Command>
+    </PostBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
@@ -112,9 +115,12 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ProgramDatabaseFile>Release/ioFreeType.pdb</ProgramDatabaseFile>
-      <ImportLibrary>../../lib/ioFreeType.lib</ImportLibrary>
+      <ImportLibrary>../../lib/ioFreeType_out.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y ..\..\lib\ioFreeType_out.lib ..\..\lib\ioFreeType.lib &amp; copy /y ..\..\lib\ioFreeType.dll ..\..\extra\lib\ioFreeType.dll</Command>
+    </PostBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
