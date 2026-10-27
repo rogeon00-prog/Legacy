@@ -39,7 +39,7 @@ void cExecuter::Destroy()
 
 
 //////////////////////////////////////////////////////////////////////
-// ÀÓ½ÃÇÔ¼ö - µð¹ö±×¿ë
+// ï¿½Ó½ï¿½ï¿½Ô¼ï¿½ - ï¿½ï¿½ï¿½ï¿½×¿ï¿½
 //////////////////////////////////////////////////////////////////////
 
 void cExecuter::Debug(const TCHAR *format, ...)
@@ -69,7 +69,7 @@ cExecuterADO::~cExecuterADO(void)
 	m_database.Cleanup();
 }
 
-// DB¿¡ ¿¬°á
+// DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 BOOL cExecuterADO::OpenDatabase(const uint32 databaseId, const TCHAR* serverIP, const uint32 serverPort, const TCHAR* database, const TCHAR* userId, const TCHAR* userPassword)
 {
 	if(m_database.Create(databaseId))
@@ -113,7 +113,7 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 
 	if(!queryData) 
 	{
-		Debug(_T("Äõ¸®(%lu) ¹öÆÛ°¡ ¾øÀ½(%lu)\r\n"), queryData->GetQueryID());
+		Debug(_T("ï¿½ï¿½ï¿½ï¿½(%lu) ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½(%lu)\r\n"), queryData->GetQueryID());
 		return FALSE;
 	}
 
@@ -125,24 +125,24 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 
 	if(!g_queryManager.GetQuery(queryData->GetQueryID(), m_query))
 	{
-		Debug(_T(" : Á¸ÀçÇÏÁö ¾Ê´Â Äõ¸®(%lu)\r\n"), queryData->GetQueryID());
+		Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½(%lu)\r\n"), queryData->GetQueryID());
 		LOG.PrintTimeAndLog(0, "QUERY NOT EXIST : (%s:%lu)%d", user->GetIP(), user->GetPort(), queryData->GetQueryID() );
 		return FALSE;
 	}
 
 	if(!g_queryManager.GetFactors(queryData->GetQueryID(), m_factors))
 	{
-		Debug(_T(" : query.lua ÆÄÀÏ ¿À·ù <input fields>\r\n"));
+		Debug(_T(" : query.lua ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ <input fields>\r\n"));
 		LOG.PrintTimeAndLog(0, "QUERY ERROR : (%s:%lu)%d", user->GetIP(), user->GetPort(), queryData->GetQueryID() );
 		return FALSE;
 	}
 
-	// ÀÀ´äÆÐÅ¶ÀÌ ¾ø´Â Äõ¸®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if(queryData->GetResultType() != _RESULT_CHECK)
 	{	
 		if(!m_database.Execute(queryData->GetDatabaseID(), queryData, m_factors, m_query.c_str()))
 		{
-			Debug(_T(" : Äõ¸®½ÇÆÐ(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
+			Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
 			if(queryData->GetResultType() == _RESULT_NAUGHT)
 			{
 				LOG.PrintTimeAndLog(0, "QUERY FAILED : (%s:%lu)%d", user->GetIP(), user->GetPort(), queryData->GetQueryID() );
@@ -166,13 +166,13 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 			}
 		}
 
-		//Debug(_T(" : Äõ¸® ½ÇÇà (%lu:%s)\r\n"), databaseId, m_query.c_str());
+		//Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (%lu:%s)\r\n"), databaseId, m_query.c_str());
 
 		cTable table;
-		table.SetQueryID( queryData->GetQueryID() ); // Å×½ºÆ®¿ëµµ
+		table.SetQueryID( queryData->GetQueryID() ); // ï¿½×½ï¿½Æ®ï¿½ëµµ
 		if(!m_database.Execute(queryData->GetDatabaseID(), queryData, m_factors, m_query.c_str(), &table))
 		{	
-			Debug(_T(" : Äõ¸®½ÇÆÐ(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
+			Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
 			LOG.PrintTimeAndLog(0, "QUERY FAILED : (%s:%lu)%d", user->GetIP(), user->GetPort(), queryData->GetQueryID() );
 			return FALSE;
 		}
@@ -183,18 +183,18 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 
 			//if((resultTypes.size() == 0) && (0 == extraSize))
 			//{
-			//	// ÀÀ´äÀÌ ÇÊ¿ä¾ø´Ù
+			//	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½
 			//	return FALSE;
 			//}
 
 			if(resultTypes.size() != table.GetFieldCount())
 			{
-				Debug(_T(" : Äõ¸®½ÇÆÐ(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
+				Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(%s:%lu)\r\n"), user->GetIP(), user->GetPort() );
 				LOG.PrintTimeAndLog(0, "QUERY DISMATCH FIELDS : (%s:%lu)%d", user->GetIP(), user->GetPort(), queryData->GetQueryID() );
 				return FALSE;
 			}
 
-			//Debug(_T(" : ÀÀ´ä (%lu)\r\n"), packet.receiver);
+			//Debug(_T(" : ï¿½ï¿½ï¿½ï¿½ (%lu)\r\n"), packet.receiver);
 			if(table.GetCount() > 0)
 			{
 				while(table.Assert())
@@ -243,7 +243,7 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 						case vChar :
 							{
 								TCHAR temp[4096];
-								if(!table.Get(index, temp, field.size)) return FALSE;	// size °ü·Ã ÇØ¼­ µð¹ö±ë ÇØº¼°Í
+								if(!table.Get(index, temp, field.size)) return FALSE;	// size ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½
 							
 								if(!m_serialize.Write(reinterpret_cast<uint8*>(temp), field.size, FALSE))
 								{
@@ -255,7 +255,7 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 						case vWChar :
 							{
 								TCHAR temp[4096];
-								if(!table.Get(index, temp, field.size)) return FALSE;	// size °ü·Ã ÇØ¼­ µð¹ö±ë ÇØº¼°Í
+								if(!table.Get(index, temp, field.size)) return FALSE;	// size ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½
 							
 								if(!m_serialize.Write(reinterpret_cast<uint8*>(temp), field.size, FALSE))
 								{
@@ -266,7 +266,7 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 							break;
 						case vTimeStamp :
 							{
-								DBTIMESTAMP value;
+								kannaDbTimestamp value;
 								if(!table.Get(index, value)) return FALSE;
 
 								if(!m_serialize.Write((char*)&value, field.size))
@@ -288,7 +288,7 @@ BOOL cExecuterADO::Execute(User* user, CQueryData *queryData, CQueryResultData& 
 			else
 			{
 				Debug("QUERY EMPTY : %d\n", queryData->GetQueryID() );
-				// °á°ú ·¹ÄÚµå°¡ Á¸ÀçÇÏÁö ¾Ê´Â´Ù
+				// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½
 				//LOG.PrintTimeAndLog(0, "QUERY EMPTY : %d", queryData->GetQueryID() );
 			}
 		}

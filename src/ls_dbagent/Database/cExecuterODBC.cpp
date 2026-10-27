@@ -4,6 +4,7 @@
 #include "../stdafx.h"
 #include <windows.h>
 
+#include "cDatabaseODBC.h"
 #include "cExecuter.h"
 #include "../NodeInfo/User.h"
 #include "cTable.h"
@@ -192,7 +193,7 @@ BOOL cExecuterODBC::Execute(User* user, CQueryData* queryData, CQueryResultData&
 							break;
 						case vTimeStamp:
 							{
-								DBTIMESTAMP value;
+								kannaDbTimestamp value;
 								ZeroMemory(&value, sizeof(value));
 								if(!table.Get((short)index, value)) return FALSE;
 

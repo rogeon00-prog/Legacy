@@ -36,7 +36,7 @@ public:
 	
 	bool	Get( const short field, float& value );
 	bool	Get( const short field, double& value );
-	bool	Get( const short field, DBTIMESTAMP &value );
+	bool	Get( const short field, kannaDbTimestamp &value );
 	bool	Get( const short field, char* value, const int size );
 	
 public:

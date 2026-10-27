@@ -256,7 +256,7 @@ bool	cTable::Get( const short field, double &value )
 	return true;
 }
 
-bool	cTable::Get( const short field, DBTIMESTAMP &value )
+bool	cTable::Get( const short field, kannaDbTimestamp &value )
 {
 	_variant_t  vtValue;
 	if( !Get( field, vtValue ) )
@@ -264,7 +264,7 @@ bool	cTable::Get( const short field, DBTIMESTAMP &value )
 
 	if(VT_NULL == vtValue.vt)
 	{
-		ZeroMemory(&value, sizeof(DBTIMESTAMP));
+		ZeroMemory(&value, sizeof(kannaDbTimestamp));
 	}
 	else
 	{
