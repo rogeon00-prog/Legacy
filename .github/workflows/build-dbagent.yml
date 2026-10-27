@@ -1,0 +1,43 @@
+name: Build ls_dbagent (server)
+
+on:
+  workflow_dispatch:
+    inputs:
+      configuration:
+        description: 'Build configuration'
+        required: true
+        default: 'Release'
+      platform:
+        description: 'Platform'
+        required: true
+        default: 'Win32'
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build ls_dbagent
+        shell: cmd
+        run: |
+          msbuild win\ls_dbagent.sln ^
+            /p:Configuration=${{ inputs.configuration }} ^
+            /p:Platform=${{ inputs.platform }} ^
+            /p:PlatformToolset=v143 ^
+            /m /v:minimal
+
+      - name: Locate artifact
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Filter ls_dbagent.exe | Select-Object FullName, Length | Format-Table
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ls_dbagent-${{ inputs.configuration }}-${{ inputs.platform }}
+          path: '**/ls_dbagent.exe'
+          if-no-files-found: error
