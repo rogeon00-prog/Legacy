@@ -22,17 +22,21 @@ jobs:
         shell: cmd
         run: echo CFG=%CFG% PLT=%PLT%
 
-      - name: Build dependencies (INI, iocpSocketDLL, Log)
+      - name: Build dependency INI (ioINILoader)
         shell: cmd
-        run: |
-          for %P in (ioINILoader iocpSocketDLL Log) do (
-            msbuild win\%P.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal || exit /b 1
-          )
+        run: msbuild win\ioINILoader.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
+
+      - name: Build dependency iocpSocketDLL
+        shell: cmd
+        run: msbuild win\iocpSocketDLL.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
+
+      - name: Build dependency Log
+        shell: cmd
+        run: msbuild win\Log.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
 
       - name: Build ls_dbagent
         shell: cmd
-        run: |
-          msbuild win\ls_dbagent.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
+        run: msbuild win\ls_dbagent.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
 
       - name: Locate artifact
         shell: pwsh
