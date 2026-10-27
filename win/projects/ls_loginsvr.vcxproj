@@ -76,7 +76,7 @@
       <StackReserveSize>10485760</StackReserveSize>
     </Link>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_loginsvr/" "../../src/ls_loginsvr/TSvnVersion.tmpl" "../../src/ls_loginsvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -117,7 +117,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_loginsvr/" "../../src/ls_loginsvr/TSvnVersion.tmpl" "../../src/ls_loginsvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

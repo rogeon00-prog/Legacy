@@ -76,7 +76,7 @@
       <StackReserveSize>10485760</StackReserveSize>
     </Link>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_relaysvr/" "../../src/ls_relaysvr/TSvnVersion.tmpl" "../../src/ls_relaysvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -116,7 +116,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_relaysvr/" "../../src/ls_relaysvr/TSvnVersion.tmpl" "../../src/ls_relaysvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -76,7 +76,7 @@
       <AdditionalOptions>/NODEFAULTLIB:msvcrt %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_gamesvr/" "../../src/ls_gamesvr/TSvnVersion.tmpl" "../../src/ls_filewritesvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +110,7 @@
       <ProgramDatabaseFile>../../../build/zone_dev/pdb/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_gamesvr/" "../../src/ls_gamesvr/TSvnVersion.tmpl" "../../src/ls_filewritesvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

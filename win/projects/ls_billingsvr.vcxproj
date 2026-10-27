@@ -74,7 +74,7 @@
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_billingsvr/" "../../src/ls_billingsvr/TSvnVersion.tmpl" "../../src/ls_billingsvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -103,7 +103,7 @@
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_billingsvr/" "../../src/ls_billingsvr/TSvnVersion.tmpl" "../../src/ls_billingsvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>

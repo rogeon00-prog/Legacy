@@ -101,7 +101,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/iocpSocketDLL/" "../../src/iocpSocketDll/TSvnVersion.tmpl" "../../src/iocpSocketDll/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -152,7 +152,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/iocpSocketDLL/" "../../src/iocpSocketDll/TSvnVersion.tmpl" "../../src/iocpSocketDll/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

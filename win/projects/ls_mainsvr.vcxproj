@@ -84,7 +84,7 @@
       <Command>copy "$(TargetDir)\$(TargetName)$(TargetExt)" "$(TargetDir)\$(TargetExt)"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_mainsvr/" "../../src/ls_mainsvr/TSvnVersion.tmpl" "../../src/ls_mainsvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,8 +122,7 @@ copy "$(TargetDir)\$(TargetName)$(TargetExt)" "$(TargetDir)\..\..\zone_dist\ls_m
 xcopy /y ..\..\..\build\zone_dist\pdb\$(TargetName).pdb ..\..\..\build\zone_dist\ls_mainsvr\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_mainsvr/" "../../src/ls_mainsvr/TSvnVersion.tmpl" "../../src/ls_mainsvr/Version.h"
-</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

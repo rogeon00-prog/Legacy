@@ -22,6 +22,13 @@ jobs:
         shell: cmd
         run: echo CFG=%CFG% PLT=%PLT%
 
+      - name: Build dependencies (INI, iocpSocketDLL, Log)
+        shell: cmd
+        run: |
+          for %P in (ioINILoader iocpSocketDLL Log) do (
+            msbuild win\%P.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal || exit /b 1
+          )
+
       - name: Build ls_dbagent
         shell: cmd
         run: |

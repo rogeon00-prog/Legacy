@@ -89,8 +89,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_gamesvr/" "../../src/ls_gamesvr/TSvnVersion.tmpl" "../../src/ls_gamesvr/Version.h"
-REM "$(ProjectDir)..\..\src\ls_gamesvr\CTPKTDefineToStringParser.exe" "$(ProjectDir)..\..\src\ls_gamesvr\Protocol.h" "$(ProjectDir)..\..\src\ls_gamesvr\ProtocolHelper.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,7 +135,7 @@ copy "$(TargetDir)\$(TargetName)$(TargetExt)" "$(TargetDir)\..\..\zone_dist\ls_g
 copy "$(TargetDir)\$(TargetName)$(TargetExt)" "$(TargetDir)\..\..\zone_dist\ls_gamesvr\$(TargetName)2$(TargetExt)"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_gamesvr/" "../../src/ls_gamesvr/TSvnVersion.tmpl" "../../src/ls_gamesvr/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
