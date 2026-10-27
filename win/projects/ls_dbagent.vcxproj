@@ -79,7 +79,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe"  "../../src/ls_dbagent/" "../../src/ls_dbagent/TSvnVersion.tmpl" "../../src/ls_dbagent/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,7 +111,7 @@
       <ProgramDatabaseFile>../../../build/zone_dev/pdb/$(ProjectName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>"../../Tools/VCSGen.exe" "../../src/ls_dbagent/" "../../src/ls_dbagent/TSvnVersion.tmpl" "../../src/ls_dbagent/Version.h"</Command>
+      <Command></Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
