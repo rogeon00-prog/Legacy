@@ -124,6 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\ls_dbagent\Database\cDatabaseADO.cpp" />
+    <ClCompile Include="..\..\src\ls_dbagent\Database\cDatabaseODBC.cpp" />
+    <ClCompile Include="..\..\src\ls_dbagent\Database\cExecuterODBC.cpp" />
     <ClCompile Include="..\..\src\ls_dbagent\Database\cExecuter.cpp" />
     <ClCompile Include="..\..\src\ls_dbagent\Database\cQueryManager.cpp" />
     <ClCompile Include="..\..\src\ls_dbagent\Database\cQueryTable.cpp" />

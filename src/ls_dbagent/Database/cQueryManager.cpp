@@ -13,7 +13,7 @@ void cQueryManager::Init()
 {
 	m_executers.clear();
 	m_databases.clear();
-	m_databaseType = DBTYPE_ADO;
+	m_databaseType = DBTYPE_ODBC;
 }
 
 void cQueryManager::Destroy()
@@ -76,14 +76,11 @@ BOOL cQueryManager::CreateExecuter(const uint32 threadId)
 		case DBTYPE_ADO:
 			executer = new cExecuterADO;
 			break;
-		//case DBTYPE_ODBC:
-		//	executer = new cExecuterODBC;
-		//	break;
-		//case DBTYPE_SQLITE:
-		//	executer = new cExecuterSQLITE;
-		//	break;
+		case DBTYPE_ODBC:
+			executer = new cExecuterODBC;
+			break;
 		default:
-			executer = new cExecuterADO;
+			executer = new cExecuterODBC;
 			break;
 		}
 	}
@@ -161,12 +158,12 @@ void cQueryManager::Encode( IN const char* plain, IN int plainLen, OUT char *cip
 {
 	EncryptDecryptData( cipher, cipherSize, plain, plainLen );
 
-	// char¸¦ 16Áø¼ö·Î º¯°æ
+	// charï¿½ï¿½ 16ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	char szTemp[MAX_PATH]="";
 	for(int i = 0; i < plainLen; i++)
 	{
 		char szTempHex[MAX_PATH]="";
-		sprintf_s(szTempHex, sizeof( szTempHex ), "%02x", (BYTE)cipher[i]); // BYTE Ä³½ºÆÃÇØ¼­ FFFFºÙÁö ¾Ê´Â´Ù.
+		sprintf_s(szTempHex, sizeof( szTempHex ), "%02x", (BYTE)cipher[i]); // BYTE Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ FFFFï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.
 		strcat_s(szTemp, sizeof( szTemp ),  szTempHex);
 	}
 	strcpy_s(cipher, cipherSize, szTemp);
@@ -177,7 +174,7 @@ void cQueryManager::Decode( IN const char *cipher, IN int cipherSize, OUT char* 
 	char charCipher[MAX_PATH]="";
 	int  charChipherSize = cipherSize/2;
 
-	// 16Áø¼ö -> char
+	// 16ï¿½ï¿½ï¿½ï¿½ -> char
 	int pos = 0;
 	for(int i = 0; i < charChipherSize; i++)
 	{

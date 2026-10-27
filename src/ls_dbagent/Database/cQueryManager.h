@@ -5,7 +5,7 @@
 #include "cExecuter.h"
 #include "cQueryTable.h"
 
-// SQL¼­¹ö Á¤º¸¸¦ ±â·Ï
+// SQLï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 struct DBInfo
 {
 	DBInfo()
@@ -26,7 +26,7 @@ struct DBInfo
 };
 
 
-// µ¥ÀÌÅ¸º£ÀÌ½º¿Í Äõ¸® ÀüÃ¼¸¦ ´ã´çÇÏ´Â Å¬·¡½º
+// ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 class cQueryManager : public SuperParent, public cQueryTable
 {
 public:
@@ -42,9 +42,11 @@ public:
 	{
 		DBTYPE_NONE = 0,
 		DBTYPE_ADO,
-		//DBTYPE_ODBC,
+		DBTYPE_ODBC,
 		//DBTYPE_SQLITE,
 	};
+
+	void SetDatabaseType(DATABASETYPE type) { m_databaseType = type; }
 
 	BOOL AddDatabase(const uint32 databaseId, const TCHAR* serverIP, const uint32 serverPort, const TCHAR* database, const TCHAR* userId, const TCHAR* userPassword);
 	BOOL AddDatabase(const uint32 databaseId, const TCHAR* database);

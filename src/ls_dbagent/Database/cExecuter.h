@@ -4,11 +4,12 @@
 #include <vector>
 #include "cDatabaseADO.h"
 #include "../util/cSerialize.h"
+#include "cDatabaseODBC.h"
 
 class User;
 
 
-// Äõ¸®ÆÐÅ¶ Á¤º¸¸¦ ÀúÀå
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 class cQuery
 {
 public:
@@ -37,7 +38,7 @@ protected:
 	cSerialize m_storage;
 };
 
-// Äõ¸®½ÇÇà ÀÎÅÍÆäÀÌ½º
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½
 class cExecuter : public cQuery
 {
 public:
@@ -70,7 +71,7 @@ protected:
 	cSerialize m_serialize;
 };
 
-// Äõ¸®½ÇÇà ÀÎÅÍÆäÀÌ½º ADO
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ADO
 class cExecuterADO : public cExecuter
 {
 public:
@@ -91,5 +92,30 @@ public:
 
 protected:
 	cDatabaseADO m_database;
+};
+
+// ---------------------------------------------------------------------------
+// backend ODBC (Wine + unixODBC/FreeTDS)
+// ---------------------------------------------------------------------------
+class cExecuterODBC : public cExecuter
+{
+public:
+	cExecuterODBC(void);
+	~cExecuterODBC(void);
+
+public:
+	BOOL OpenDatabase(
+		const uint32 databaseId,
+		const TCHAR* serverIP,
+		const uint32 serverPort,
+		const TCHAR* database,
+		const TCHAR* userId,
+		const TCHAR* userPassword);
+
+public:
+	virtual BOOL Execute(User* user, CQueryData *queryData, CQueryResultData& result);
+
+protected:
+	cDatabaseODBC m_database;
 };
 

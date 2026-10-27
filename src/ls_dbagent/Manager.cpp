@@ -75,11 +75,11 @@ void Manager::Startup(const char* scriptName)
 BOOL Manager::LoadINI()
 {
 	//---------------------------------
-	//        ini Á¤º¸
+	//        ini ï¿½ï¿½ï¿½ï¿½
 	//---------------------------------
 	const char* szINI = g_MainProc.GetINI().c_str();
 
-	m_logSvrPort = GetPrivateProfileInt("Default", "LogServerPort", 0, szINI);	 //·Î±× ¼­¹öº°·Î 
+	m_logSvrPort = GetPrivateProfileInt("Default", "LogServerPort", 0, szINI);	 //ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	(m_logSvrPort == 0) ? g_MainProc.SetLoggerState(FALSE) : g_MainProc.SetLoggerState(TRUE);
 
 	m_port = GetPrivateProfileInt("Default", "Port", 10000, szINI);	
@@ -94,7 +94,15 @@ BOOL Manager::LoadINI()
 		GetPrivateProfileString("SQL", "ID", "", m_dbID, sizeof(m_dbID), szINI);	
 		GetPrivateProfileString("SQL", "PW", "", m_dbPwd, sizeof(m_dbPwd), szINI);	
 
-		m_dbPort = GetPrivateProfileInt("SQL", "Port", 1433, szINI);	
+		m_dbPort = GetPrivateProfileInt("SQL", "Port", 1433, szINI);
+
+		// backend DB: ODBC (Wine) atau ADO (Windows). default ODBC.
+		TCHAR szDbType[32] = {0};
+		GetPrivateProfileString("SQL", "Type", "ODBC", szDbType, sizeof(szDbType), szINI);
+		if(_tcsicmp(szDbType, _T("ADO")) == 0)
+			g_queryManager.SetDatabaseType(cQueryManager::DBTYPE_ADO);
+		else
+			g_queryManager.SetDatabaseType(cQueryManager::DBTYPE_ODBC);	
 
 		if(strcmp(m_dbIP,"") == 0)
 		{
@@ -113,7 +121,7 @@ BOOL Manager::CreateDB()
 	 
 	Information( "Create DatabasePool.." );
 	//--------------------------------
-	//     DB Á¢¼Ó
+	//     DB ï¿½ï¿½ï¿½ï¿½
 	//--------------------------------
 
 	if(!g_MainProc.LoadQuery())
@@ -149,7 +157,7 @@ BOOL Manager::ListenNetwork()
 	m_logicThread = new LogicThread;
 	m_logicThread->SetProcessor(&(g_MainProc));
 
-	// ¸ÞÀÎÇÁ·Î¼¼½º¿Í ·ÎÁ÷½º·¹µå ±¸µ¿
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if( !g_iocp.Initialize() )
 	{
 		m_error = 0x1003;
