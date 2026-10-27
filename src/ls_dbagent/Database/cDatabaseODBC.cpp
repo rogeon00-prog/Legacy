@@ -58,7 +58,7 @@ static const char* OdbcExtraOptions()
 	return opt;
 }
 
-static void ParseTimestamp(const std::string& text, DBTIMESTAMP& out)
+static void ParseTimestamp(const std::string& text, kannaDbTimestamp& out)
 {
 	ZeroMemory(&out, sizeof(out));
 	if(text.empty())
@@ -179,7 +179,7 @@ bool cOdbcTable::Get(const short field, double& value)
 	return true;
 }
 
-bool cOdbcTable::Get(const short field, DBTIMESTAMP& value)
+bool cOdbcTable::Get(const short field, kannaDbTimestamp& value)
 {
 	const cOdbcCell* c = Cell(field);
 	if(!c) return false;
@@ -504,7 +504,7 @@ BOOL cOdbcConnection::Prepare(CQueryData* queryData, FACTORS& factorList, const 
 				ZeroMemory(&value, sizeof(value));
 				if(!fields.GetBuffer((uint8*)&value, sizeof(SYSTEMTIME))) return FALSE;
 
-				DBTIMESTAMP ts;
+				kannaDbTimestamp ts;
 				ZeroMemory(&ts, sizeof(ts));
 				ts.year		= (SQLUSMALLINT)value.wYear;
 				ts.month	= (SQLUSMALLINT)value.wMonth;

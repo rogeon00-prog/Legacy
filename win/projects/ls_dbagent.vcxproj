@@ -99,7 +99,7 @@
       <ObjectFileName>./$(ProjectName)\$(Configuration)\</ObjectFileName>
       <ProgramDataBaseFileName>./$(ProjectName)\$(Configuration)\</ProgramDataBaseFileName>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../../src/ls_dbagent</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src/ls_dbagent;../../lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

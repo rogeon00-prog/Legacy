@@ -12,6 +12,21 @@
 #include <sql.h>
 #include <sqlext.h>
 
+// kannaDbTimestamp tidak selalu tersedia: header ODBC SDK menggerbanginya di ODBCVER >= 0x0300
+// (di CI/Windows SDK tertentu tipe itu absen -> C2061/C3646). Pakai tipe sendiri dengan
+// layout identik SQL_TIMESTAMP_STRUCT supaya binding SQL_C_TYPE_TIMESTAMP tetap benar.
+typedef struct kannaDbTimestamp
+{
+	short			year;
+	unsigned short	month;
+	unsigned short	day;
+	unsigned short	hour;
+	unsigned short	minute;
+	unsigned short	second;
+	unsigned int	fraction;
+} kannaDbTimestamp;
+
+
 #include <map>
 #include <string>
 #include <vector>
@@ -26,7 +41,7 @@ struct cOdbcCell
 	bool					isNull;
 	int64					integer;
 	double					real;
-	DBTIMESTAMP				time;
+	kannaDbTimestamp				time;
 	std::string				text;
 
 	cOdbcCell() : isNull(true), integer(0), real(0)
@@ -65,7 +80,7 @@ public:
 
 	bool	Get(const short field, float&  value);
 	bool	Get(const short field, double& value);
-	bool	Get(const short field, DBTIMESTAMP& value);
+	bool	Get(const short field, kannaDbTimestamp& value);
 	bool	Get(const short field, char* value, const int size);
 
 	void	SetQueryID(const uint32 queryId) { m_queryId = queryId; }
