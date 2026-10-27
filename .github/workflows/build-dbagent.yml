@@ -1,6 +1,8 @@
 name: Build ls_dbagent (server)
 
 on:
+  push:
+    branches: [ feat/odbc-dbagent ]
   workflow_dispatch:
     inputs:
       configuration:
