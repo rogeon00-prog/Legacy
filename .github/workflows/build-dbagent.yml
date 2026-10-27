@@ -4,15 +4,10 @@ on:
   push:
     branches: [ feat/odbc-dbagent ]
   workflow_dispatch:
-    inputs:
-      configuration:
-        description: 'Build configuration'
-        required: true
-        default: 'Release'
-      platform:
-        description: 'Platform'
-        required: true
-        default: 'Win32'
+
+env:
+  CFG: ${{ inputs.configuration || 'Release' }}
+  PLT: ${{ inputs.platform || 'Win32' }}
 
 jobs:
   build:
@@ -23,23 +18,22 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Show target config
+        shell: cmd
+        run: echo CFG=%CFG% PLT=%PLT%
+
       - name: Build ls_dbagent
         shell: cmd
         run: |
-          msbuild win\ls_dbagent.sln ^
-            /p:Configuration=${{ inputs.configuration }} ^
-            /p:Platform=${{ inputs.platform }} ^
-            /p:PlatformToolset=v143 ^
-            /m /v:minimal
+          msbuild win\ls_dbagent.sln /p:Configuration=%CFG% /p:Platform=%PLT% /p:PlatformToolset=v143 /m /v:minimal
 
       - name: Locate artifact
         shell: pwsh
-        run: |
-          Get-ChildItem -Recurse -Filter ls_dbagent.exe | Select-Object FullName, Length | Format-Table
+        run: Get-ChildItem -Recurse -Filter ls_dbagent.exe | Select-Object FullName, Length | Format-Table
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ls_dbagent-${{ inputs.configuration }}-${{ inputs.platform }}
+          name: ls_dbagent-${{ env.CFG }}-${{ env.PLT }}
           path: '**/ls_dbagent.exe'
           if-no-files-found: error
